@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.tw25.azurefey.feywild.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+  ],
+  "client": [
+    "FeywildTitleMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}

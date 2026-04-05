@@ -1,5 +1,5 @@
 plugins {
-	kotlin("jvm") version "2.2.10"
+	kotlin("jvm") version "2.3.10"
 	`maven-publish`
 	java
 
@@ -26,7 +26,7 @@ dependencies {
 
 	mappings(loom.layered {
 		officialMojangMappings()
-		parchment("org.parchmentmc.data:parchment-1.21.1:2024.11.17@zip")
+		parchment("org.parchmentmc.data:parchment-1.20.1:2023.09.03@zip")
 	})
 
 	//Fabric
@@ -50,16 +50,15 @@ tasks.processResources {
 	}
 }
 
-tasks.withType<JavaCompile>().configureEach {
-	options.release.set(21)
-}
 
 java {
 	withSourcesJar()
 
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
 }
+
 
 tasks.jar {
 	from("LICENSE") {
@@ -81,7 +80,7 @@ task("buildOrPublish") {
 	}
 }
 
-// TODO: Uncomment for a non template mod!
+// TODO: Uncomment for a non feywild mod!
 publishing {
 //	publications {
 //		create<MavenPublication>("mavenJava") {

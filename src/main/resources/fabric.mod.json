@@ -1,44 +1,44 @@
 {
 	"schemaVersion": 1,
-	"id": "template",
+	"id": "feywild",
 	"version": "${version}",
-	"name": "Template mod",
+	"name": "Feywild Util",
 	"description": "This is an example description! Tell everyone what your mod is about!",
 	"authors": [
-		"devOS: Sanity Edition",
-		"Team Nautical"
+		"Azure Fey MC"
 	],
 	"contributors": [
-		"Put your GitHub username here!"
+		"Teal Wolf 25",
+		"Elegast Kelural"
 	],
 	"contact": {
-		"homepage": "https://devos.one/",
-		"sources": "https://github.com/devOS-Sanity-Edition/fabric-nautical-template-kt"
+		"homepage": "https://azurefey.tw25.net/",
+		"sources": "https://github.com/Azure-Fey-MC/Feywild-Util"
 	},
 	"license": "MIT",
-	"icon": "assets/template/icon.png",
+	"icon": "assets/feywild/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
 			{
 				"adapter": "kotlin",
-				"value": "one.devos.nautical.template.TemplateMod"
+				"value": "net.tw25.azurefey.feywild.FeywildUtilMod"
 			}
 		],
 		"client": [
 			{
 				"adapter": "kotlin",
-				"value": "one.devos.nautical.template.client.TemplateModClient"
+				"value": "net.tw25.azurefey.feywild.client.FeywildUtilModClient"
 			}
 		]
 	},
 	"mixins": [
-		"template.mixins.json"
+		"feywild.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.17.2",
-		"minecraft": "1.21.1",
-		"java": ">=21",
+		"minecraft": "1.20.1",
+		"java": ">=17",
 		"fabric-api": "*",
 		"fabric-language-kotlin": "*"
 	}

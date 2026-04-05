@@ -1,2 +1,2 @@
-# Fabric Nautical Template
-Team Nautical's take on the Fabric Example Mod but Kotlin
+# Feywild Util
+This is a mod used to add stuff to Shattered Reality

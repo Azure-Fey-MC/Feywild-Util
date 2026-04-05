@@ -1,11 +1,11 @@
-package one.devos.nautical.template.client
+package net.tw25.azurefey.feywild.client
 
 import net.fabricmc.api.ClientModInitializer
 
 /**
  * This entrypoint is suitable for setting up client-specific logic, such as rendering.
  */
-object TemplateModClient : ClientModInitializer {
+object FeywildUtilModClient : ClientModInitializer {
 
     /**
      * This code runs on the Minecraft Client as soon as it's in a mod-load-ready state.
