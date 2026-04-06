@@ -6,6 +6,7 @@ fabric_loader = "0.18.4"
 fabric_api = "0.92.7+1.20.1"
 fabric_language_kotlin = "1.13.9+kotlin.2.3.10"
 midnightlib = "1.9.2+1.20.1-fabric"
+mod_menu = "7.2.2"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -14,10 +15,11 @@ fabric_loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric_l
 fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric_api" }
 fabric_language_kotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric_language_kotlin" }
 midnightlib = { module = "eu.midnightdust:midnightlib", version.ref = "midnightlib" }
+mod_menu = { module = "com.terraformersmc:modmenu", version.ref = "mod_menu" }
 
 # If you have multiple similar dependencies, you can declare a dependency bundle and reference it on the build script with "libs.bundles.example".
 [bundles]
-dev_mods = [  ]
+dev_mods = [ "mod_menu" ]
 dependencies = [ "midnightlib" ]
 
 [plugins]
