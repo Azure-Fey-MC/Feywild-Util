@@ -17,6 +17,7 @@ repositories {
 	maven("https://maven.parchmentmc.org")
 	maven("https://mvn.devos.one/snapshots")
 	maven("https://maven.quiltmc.org/repository/release/")
+	maven("https://maven.midnightdust.eu/releases")
 }
 
 //All dependencies and their versions are in ./gradle/libs.versions.toml

@@ -5,6 +5,7 @@ minecraft = "1.20.1"
 fabric_loader = "0.18.4"
 fabric_api = "0.92.7+1.20.1"
 fabric_language_kotlin = "1.13.9+kotlin.2.3.10"
+midnightlib = "1.9.2+1.20.1-fabric"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -12,13 +13,14 @@ minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
 fabric_loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric_loader" }
 fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric_api" }
 fabric_language_kotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric_language_kotlin" }
+midnightlib = { module = "eu.midnightdust:midnightlib", version.ref = "midnightlib" }
 
 # If you have multiple similar dependencies, you can declare a dependency bundle and reference it on the build script with "libs.bundles.example".
 [bundles]
 dev_mods = [  ]
-dependencies = [  ]
+dependencies = [ "midnightlib" ]
 
 [plugins]
 grgit = { id = "org.ajoberstar.grgit", version = "5.3.2"}
-fabric_loom = { id = "fabric-loom", version = "1.11-SNAPSHOT" }
+fabric_loom = { id = "fabric-loom", version = "1.15-SNAPSHOT" }
 
