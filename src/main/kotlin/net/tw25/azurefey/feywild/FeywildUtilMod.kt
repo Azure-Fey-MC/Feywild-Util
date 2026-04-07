@@ -5,6 +5,8 @@ import net.fabricmc.api.ModInitializer
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import eu.midnightdust.lib.config.MidnightConfig
+import net.minecraft.resources.ResourceLocation
+import net.tw25.azurefey.feywild.FeywildUtilItems
 
 /**
  * This is your mod's main entrypoint class, this runs on both Client and Server.
@@ -14,6 +16,7 @@ object FeywildUtilMod : ModInitializer {
     val MOD_ID: String = "feywild"
     val LOGGER: Logger = LoggerFactory.getLogger(MOD_ID)
     val MOD_NAME: String = FMW.getName(MOD_ID)
+    @JvmStatic fun id(string: String) = ResourceLocation(MOD_ID, string)
 
     /**
      * This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -23,5 +26,6 @@ object FeywildUtilMod : ModInitializer {
     override fun onInitialize() {
         LOGGER.info("[${MOD_NAME}] Hello Fabric world from $MOD_NAME/$MOD_ID")
         MidnightConfig.init("feywild", FeywildUtilConfig::class.java)
+        FeywildUtilItems.init()
     }
 }
