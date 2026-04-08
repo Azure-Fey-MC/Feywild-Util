@@ -5,6 +5,7 @@ plugins {
 
 	alias(libs.plugins.grgit)
 	alias(libs.plugins.fabric.loom)
+	alias(libs.plugins.pkpcpbp)
 }
 
 val archivesBaseName = "${project.property("archives_base_name").toString()}+mc${libs.versions.minecraft.get()}"
@@ -18,6 +19,7 @@ repositories {
 	maven("https://mvn.devos.one/snapshots")
 	maven("https://maven.quiltmc.org/repository/release/")
 	maven("https://maven.midnightdust.eu/releases")
+	maven("https://maven.blamejared.com/")
 }
 
 //All dependencies and their versions are in ./gradle/libs.versions.toml
@@ -101,6 +103,11 @@ publishing {
 			}
 		}
 	}
+}
+
+pkJson5 {
+	autoProcessJson5 = true
+	autoProcessJson5Flattening = true
 }
 
 fun getModVersion(): String {
