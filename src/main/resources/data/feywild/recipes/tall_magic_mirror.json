@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "M ",
+    "PG",
+    "PG"
+  ],
+  "key": {
+    "M": {
+      "item": "feywild:magic_mirror"
+    },
+    "P": {
+      "item": "minecraft:glass_pane"
+    },
+    "G": {
+      "item": "minecraft:gold_block"
+    }
+  },
+  "result": {
+    "item": "feywild:tall_magic_mirror",
+    "count": 1
+  }
+}

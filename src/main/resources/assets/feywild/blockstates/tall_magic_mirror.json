@@ -1,0 +1,24 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "feywild:block/tall_magic_mirror",
+      "y": 0,
+      "uvlock": true
+    },
+    "facing=east": {
+      "model": "feywild:block/tall_magic_mirror",
+      "y": 90,
+      "uvlock": true
+    },
+    "facing=south": {
+      "model": "feywild:block/tall_magic_mirror",
+      "y": 180,
+      "uvlock": true
+    },
+    "facing=west": {
+      "model": "feywild:block/tall_magic_mirror",
+      "y": 270,
+      "uvlock": true
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "item.feywild": {
+    "magic_mirror": {
+      "": "Magic Mirror",
+      "description": {
+        "": "The mirror seems to glitter and shine with remnants of another world",
+        "use": "Transport yourself between the Overworld and ",
+        "hit": "Transport the entity between the Overworld and "
+      }
+    },
+    "hand_mirror": {
+      "": "Hand Mirror",
+      "reflection": {
+        "good": {
+          "1": "I like how my hair looks today",
+          "2": "I like my smile",
+          "3": "I look healthy",
+          "4": "I like my outfit today",
+          "5": "I look cute"
+        },
+        "bad": {
+          "1": "I look tired",
+          "2": "I really need to fix myself up a bit",
+          "3": "Are my teeth crooked?",
+          "4": "My hair is so messy",
+          "5": "This thing is back again?"
+        }
+      },
+      "description.use": "Infused into "
+    },
+    "description.action": {
+      "use": {
+        "": "When used",
+        "target": "When used on ",
+      },
+      "hit": "When entity hit with"
+    }
+  },
+  "block.feywild": {
+    "tall_magic_mirror": "Tall Magic Mirror"
+  },
+  "itemGroup.feywild.feywild": "Feywild Util",
+  "dimension.feywild.mirror": "The Mirror",
+  "feywild": {
+    "midnightconfig": {
+      "title": "Feywild Util Config",
+      "compatibilityMode": "Compatibility Mode",
+      "debug": "Debug Logging"
+    },
+    "compatibility": "[Feywild Util] Detected Legacy Item %s in your inventory or ender chest, replaced it with it's modern version"
+  }
+}

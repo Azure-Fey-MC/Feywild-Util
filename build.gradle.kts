@@ -136,3 +136,18 @@ fun getModVersion(): String {
 	return "${modVersion}+unknown"
 
 }
+
+loom {
+	runs {
+		register("datagen") { // old styled datagen setup
+			client()
+			name("Data Generation")
+			vmArgs(
+				"-Dfabric-api.datagen",
+				"-Dfabric-api.datagen.output-dir=${file("src/main/generated")}",
+				"-Dfabric-api.datagen.modid=${project.name}"
+			)
+			runDir("build/datagen")
+		}
+	}
+}

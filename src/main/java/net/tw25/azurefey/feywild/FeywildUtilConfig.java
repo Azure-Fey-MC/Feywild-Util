@@ -16,4 +16,5 @@ public class FeywildUtilConfig extends MidnightConfig {
     public static final String CONDITIONS = "conditions";
 
     @Entry(category = TEXT) public static boolean compatibilityMode = true;
+    @Entry(category = TEXT) public static boolean debug = false;
 }
