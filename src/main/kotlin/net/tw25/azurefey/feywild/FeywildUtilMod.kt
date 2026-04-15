@@ -45,22 +45,23 @@ object FeywildUtilMod : ModInitializer {
 
         ServerTickEvents.EndTick { server: MinecraftServer ->
             if (FeywildUtilConfig.compatibilityMode && server.tickCount % 20 == 0 && FabricLoader.getInstance().isModLoaded("shattered_reality")) {4
-                fun replaceOldItem(player: Player, slot: Int, oldItem: ResourceKey<Item>, newItem: Item) {
-                    val stackCount = player.inventory.getItem(slot).count
-                    if (player.inventory.getItem(slot).item == oldItem) {
-                        player.inventory.setItem(slot, ItemStack(newItem, stackCount))
+                fun replaceOldItem(player: Player, slot: ItemStack, oldItem: ResourceKey<Item>, newItem: Item) {
+                    val stackCount = slot.count
+                    if (slot.item == oldItem) {
+                        player.inventory.removeItem(slot)
+                        player.inventory.add(stackCount, ItemStack(newItem, stackCount))
                         player.displayClientMessage(
                             Component.translatable(
                                 "feyfild.compatibility",
-                                newItem.getName(player.inventory.getItem(slot))).withStyle(
+                                newItem.getName(slot)).withStyle(
                             ChatFormatting.RED
                                 ),
                             false)
                     }
                 }
                 val playerListings = server.playerList.players
-                val slots: List<Int> = (0..35).toMutableList()+(200..226).toMutableList()+(98..103).toMutableList()
                 for (player in playerListings) {
+                    val slots = player.inventory.items
                     for (slot in slots) {
                         replaceOldItem(player, slot, ResourceKey.create(Registries.ITEM,oldId("hand_mirror")), FeywildUtilItems.HAND_MIRROR)
                         replaceOldItem(player, slot, ResourceKey.create(Registries.ITEM,oldId("magic_mirror_new")), FeywildUtilItems.MAGIC_MIRROR)

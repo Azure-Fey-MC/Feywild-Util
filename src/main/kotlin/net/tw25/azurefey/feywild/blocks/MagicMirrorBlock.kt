@@ -34,7 +34,11 @@ object MagicMirrorBlock : HorizontalDirectionalBlock(Properties.of().destroyTime
     }
 
     override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
-        return super.getStateForPlacement(context)!!.setValue(BlockStateProperties.HORIZONTAL_FACING, context.nearestLookingDirection.opposite)
+        var facing: Direction = context.nearestLookingDirection.opposite
+        if (facing != Direction.NORTH && facing != Direction.SOUTH && facing != Direction.EAST && facing != Direction.WEST) {
+            facing = Direction.NORTH
+        }
+        return super.getStateForPlacement(context)!!.setValue(BlockStateProperties.HORIZONTAL_FACING, facing)
     }
 
     @Deprecated("Deprecated in Java")
@@ -46,6 +50,7 @@ object MagicMirrorBlock : HorizontalDirectionalBlock(Properties.of().destroyTime
     ): VoxelShape {
         return Shapes.box(0.0,0.0,0.0,1.0,2.0,1.0)
     }
+
     @Deprecated("Deprecated in Java")
     override fun use(
         state: BlockState,

@@ -31,7 +31,7 @@
     "description.action": {
       "use": {
         "": "When used",
-        "target": "When used on ",
+        "target": "When used on %s",
       },
       "hit": "When entity hit with"
     }
@@ -47,6 +47,6 @@
       "compatibilityMode": "Compatibility Mode",
       "debug": "Debug Logging"
     },
-    "compatibility": "[Feywild Util] Detected Legacy Item %s in your inventory or ender chest, replaced it with it's modern version"
+    "compatibility": "[Feywild Util] Detected Legacy Item %s in your inventory, replaced it with it's modern version"
   }
 }

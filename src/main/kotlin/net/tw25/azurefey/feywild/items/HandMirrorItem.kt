@@ -35,7 +35,7 @@ object HandMirrorItem : Item(Properties().stacksTo(1).rarity(Rarity.COMMON)) {
         if (FeywildUtilConfig.debug) {
             context.player!!.displayClientMessage(Component.literal(" hand: "+context.hand.toString()), false)
         }
-        val voidlikeBlocks: Array<Block> = arrayOf(Blocks.END_PORTAL, Blocks.END_GATEWAY) // Replace with block tag later
+        val voidlikeBlocks: Array<Block> = arrayOf(Blocks.END_PORTAL, Blocks.END_GATEWAY) // TODO: Replace with block tag
         if (context.player!!.level().getBlockState(context.clickedPos).block in voidlikeBlocks) {
             context.player!!.setItemInHand(context.hand, ItemStack(FeywildUtilItems.MAGIC_MIRROR, context.itemInHand.count))
             return InteractionResult.SUCCESS
