@@ -1,13 +1,14 @@
 package net.tw25.azurefey.feywild.blocks
 
+import com.mojang.serialization.MapCodec
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.InteractionResult
+import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
@@ -52,17 +53,18 @@ object MagicMirrorBlock : HorizontalDirectionalBlock(Properties.of().destroyTime
     }
 
     @Deprecated("Deprecated in Java")
-    override fun use(
+    override fun useItemOn(
+        stack: ItemStack,
         state: BlockState,
         level: Level,
         pos: BlockPos,
         player: Player,
         usedHand: InteractionHand,
         hit: BlockHitResult
-    ): InteractionResult {
+    ): ItemInteractionResult {
         val location = player.position()
         if (level.isClientSide) {
-            return InteractionResult.CONSUME
+            return ItemInteractionResult.CONSUME
         }
         MirrorTravel.useMirror(player, location)
         val mirrorDimension = ResourceKey.create(Registries.DIMENSION,FeywildUtilMod.id("mirror"))
@@ -72,6 +74,10 @@ object MagicMirrorBlock : HorizontalDirectionalBlock(Properties.of().destroyTime
             player.server?.overworld()?.setBlock(pos, state, 0)
         }
 
-        return InteractionResult.SUCCESS
+        return ItemInteractionResult.SUCCESS
+    }
+
+    override fun codec(): MapCodec<out HorizontalDirectionalBlock?>? {
+        TODO("Not yet implemented")
     }
 }

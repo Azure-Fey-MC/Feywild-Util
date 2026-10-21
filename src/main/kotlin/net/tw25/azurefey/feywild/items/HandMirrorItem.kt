@@ -1,7 +1,6 @@
 package net.tw25.azurefey.feywild.items
 
 import net.minecraft.ChatFormatting
-import net.minecraft.client.KeyMapping
 import net.minecraft.network.chat.Component
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -47,11 +46,11 @@ object HandMirrorItem : Item(Properties().stacksTo(1).rarity(Rarity.COMMON)) {
 
     override fun appendHoverText(
         stack: ItemStack,
-        level: Level?,
-        tooltipComponents: List<Component?>,
+        context: TooltipContext,
+        tooltipComponents: MutableList<Component>,
         isAdvanced: TooltipFlag
     ) {
-        (tooltipComponents as MutableList).add(Component.translatable("item.feywild.description.action.use.target", "Void like blocks").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD))
+        tooltipComponents.add(Component.translatable("item.feywild.description.action.use.target", "Void like blocks").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD))
         tooltipComponents.add(Component.translatable("item.feywild.hand_mirror.description.use").append(Component.translatable("item.feywild.magic_mirror")))
     }
 }

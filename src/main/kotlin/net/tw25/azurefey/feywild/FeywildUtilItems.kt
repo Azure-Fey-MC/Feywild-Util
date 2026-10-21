@@ -3,7 +3,6 @@ package net.tw25.azurefey.feywild
 import net.minecraft.world.item.Item
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.world.item.CreativeModeTab
 import net.tw25.azurefey.feywild.items.HandMirrorItem
 import net.tw25.azurefey.feywild.items.MagicMirrorItem
 
