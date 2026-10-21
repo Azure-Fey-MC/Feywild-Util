@@ -15,7 +15,7 @@ object FeywildUtilMod : ModInitializer {
     const val MOD_ID: String = "feywild"
     val LOGGER: Logger = LoggerFactory.getLogger(MOD_ID)
     val MOD_NAME: String = FMW.getName(MOD_ID)
-    @JvmStatic fun id(string: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MOD_NAME, string)
+    @JvmStatic fun id(string: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MOD_ID, string)
 
     /**
      * This code runs as soon as Minecraft is in a mod-load-ready state.
