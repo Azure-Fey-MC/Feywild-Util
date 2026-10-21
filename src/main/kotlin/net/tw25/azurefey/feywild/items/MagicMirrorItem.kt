@@ -14,7 +14,8 @@ import net.minecraft.world.level.Level
 import net.tw25.azurefey.feywild.FeywildUtilItems
 import net.tw25.azurefey.feywild.behavior.MirrorTravel
 
-object MagicMirrorItem : Item(Properties().stacksTo(1).rarity(Rarity.RARE).craftRemainder(FeywildUtilItems.HAND_MIRROR)) {
+object MagicMirrorItem :
+    Item(Properties().stacksTo(1).rarity(Rarity.RARE).craftRemainder(FeywildUtilItems.HAND_MIRROR)) {
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack?>? {
         val stack = player.getItemInHand(usedHand)
         val location = player.position()
@@ -40,10 +41,25 @@ object MagicMirrorItem : Item(Properties().stacksTo(1).rarity(Rarity.RARE).craft
         tooltipComponents: MutableList<Component>,
         isAdvanced: TooltipFlag
     ) {
-        tooltipComponents.add(Component.translatable("item.feywild.magic_mirror.description").withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC))
-        tooltipComponents.add(Component.translatable("item.feywild.description.action.use").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD))
-        tooltipComponents.add(Component.translatable("item.feywild.magic_mirror.description.use").append(Component.translatable("dimension.feywild.mirror")))
-        tooltipComponents.add(Component.translatable("item.feywild.description.action.hit").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD))
-        tooltipComponents.add(Component.translatable("item.feywild.magic_mirror.description.hit").append(Component.translatable("dimension.feywild.mirror")))
+        tooltipComponents.add(
+            Component.translatable("item.feywild.magic_mirror.description").withStyle(ChatFormatting.GRAY)
+                .withStyle(ChatFormatting.ITALIC)
+        )
+        tooltipComponents.add(
+            Component.translatable("item.feywild.description.action.use").withStyle(ChatFormatting.YELLOW)
+                .withStyle(ChatFormatting.BOLD)
+        )
+        tooltipComponents.add(
+            Component.translatable("item.feywild.magic_mirror.description.use")
+                .append(Component.translatable("dimension.feywild.mirror"))
+        )
+        tooltipComponents.add(
+            Component.translatable("item.feywild.description.action.hit").withStyle(ChatFormatting.YELLOW)
+                .withStyle(ChatFormatting.BOLD)
+        )
+        tooltipComponents.add(
+            Component.translatable("item.feywild.magic_mirror.description.hit")
+                .append(Component.translatable("dimension.feywild.mirror"))
+        )
     }
 }
