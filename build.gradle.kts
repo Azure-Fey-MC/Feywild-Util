@@ -154,6 +154,11 @@ publishing {
 	}
 }
 
+pkJson5 {
+	autoProcessJson5 = true
+	autoProcessJson5Flattening = true
+}
+
 fun getModVersion(): String {
 	val modVersion = project.property("mod_version").toString()
 	val gitExitCode = providers.exec { commandLine("git", "--version"); isIgnoreExitValue = true }.result.get().exitValue
