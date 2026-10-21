@@ -132,8 +132,9 @@ tasks.processResources {
 }
 
 tasks.jar {
+	val archivesName = project.base.archivesName.get()
 	from("LICENSE") {
-		rename { "${it}_${project.base.archivesName.get()}"}
+		rename { "${it}_$archivesName" }
 	}
 }
 

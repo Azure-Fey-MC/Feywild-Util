@@ -39,7 +39,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build w/ Gradle
-        run: ./gradlew --configuration-cache build
+        run: ./gradlew build
 
       - name: Publish Snapshot
         if: ${{ github.event.inputs.type == 'snapshot' }}
