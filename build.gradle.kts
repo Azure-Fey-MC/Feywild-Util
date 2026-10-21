@@ -1,16 +1,20 @@
 plugins {
-	kotlin("jvm") version "2.3.10"
+	kotlin("jvm") version "2.3.20"
 	`maven-publish`
 	java
 
-	alias(libs.plugins.grgit)
 	alias(libs.plugins.fabric.loom)
 	alias(libs.plugins.pkpcpbp)
 }
 
-val archivesBaseName = "${project.property("archives_base_name").toString()}+mc${libs.versions.minecraft.get()}"
 version = getModVersion()
-group = project.property("maven_group")!!
+group = "net.tw25.azurefey"
+
+val fabricApiVersion = libs.fabric.api.get().version
+val fabricLanguageKotlinVersion = libs.fabric.language.kotlin.get().version
+val fabricLoaderVersion = libs.fabric.loader.get().version
+val minecraftVersion = libs.minecraft.get().version
+val javaVersion = rootProject.java.sourceCompatibility.majorVersion
 
 repositories {
 	maven("https://api.modrinth.com/maven")
@@ -29,10 +33,9 @@ dependencies {
 
 	mappings(loom.layered {
 		officialMojangMappings()
-		parchment("org.parchmentmc.data:parchment-1.20.1:2023.09.03@zip")
+		parchment("org.parchmentmc.data:parchment-1.21.1:2024.11.17@zip")
 	})
 
-	//Fabric
 	modImplementation(libs.fabric.loader)
 	modImplementation(libs.fabric.api)
 	modImplementation(libs.fabric.language.kotlin)
@@ -44,102 +47,18 @@ dependencies {
 	include(modImplementation("gay.asoji:fmw:1.0.0+build.8")!!) // just to avoid the basic long metadata calls
 }
 
-// Write the version to the fabric.mod.json
-tasks.processResources {
-	inputs.property("version", project.version)
-
-	filesMatching("fabric.mod.json") {
-		expand(mutableMapOf("version" to project.version))
-	}
-}
-
-
-java {
-	withSourcesJar()
-
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
-}
-
-
-tasks.jar {
-	from("LICENSE") {
-		rename { "${it}_${project.base.archivesName.get()}"}
-	}
-}
-
-// This will attempt to publish the mod to the devOS Maven, otherwise it will build the mod locally
-// This is auto run by GitHub Actions
-task("buildOrPublish") {
-	group = "build"
-	var mavenUser = System.getenv().get("MAVEN_USER")
-	if (!mavenUser.isNullOrEmpty()) {
-		dependsOn(tasks.getByName("publish"))
-		println("prepared for publish")
-	} else {
-		dependsOn(tasks.getByName("build"))
-		println("prepared for build")
-	}
-}
-
-publishing {
-	publications {
-		create<MavenPublication>("mavenJava") {
-			groupId = project.property("maven_group").toString()
-			artifactId = project.property("archives_base_name").toString()
-			version = getModVersion()
-
-			from(components.get("java"))
+sourceSets {
+	main {
+		resources {
+			srcDir("src/main/generated")
+			exclude("src/main/generated/.cache")
 		}
 	}
-
-	repositories {
-		maven {
-			url = uri("https://mvn.devos.one/${System.getenv()["PUBLISH_SUFFIX"]}/")
-			credentials {
-				username = System.getenv()["MAVEN_USER"]
-				password = System.getenv()["MAVEN_PASS"]
-			}
-		}
-	}
-}
-
-pkJson5 {
-	autoProcessJson5 = true
-	autoProcessJson5Flattening = true
-}
-
-fun getModVersion(): String {
-	val modVersion = project.property("mod_version")
-	val buildId = System.getenv("GITHUB_RUN_NUMBER")
-
-	// CI builds only
-	if (buildId != null) {
-		return "${modVersion}+build.${buildId}"
-	}
-
-	// If a git repo can't be found, grgit won't work, this non-null check exists so you don't run grgit stuff without a git repo
-	if (grgitService.service.get().grgit.head() != null) {
-		var id = grgitService.service.get().grgit.head().abbreviatedId ?: "NO-COMMIT-HASH"
-
-		// Flag the build if the build tree is not clean
-		// (aka you have uncommitted changes)
-		if (!grgitService.service.get().grgit.status().isClean()) {
-			id += "-dirty"
-		}
-		// ex: 1.0.0+rev.91949fa or 1.0.0+rev.91949fa-dirty
-		return "${modVersion}+rev.${id}"
-	}
-
-	// No tracking information could be found about the build
-	return "${modVersion}+unknown"
-
 }
 
 loom {
 	runs {
-		register("datagen") { // old styled datagen setup
+		register("datagen") {
 			client()
 			name("Data Generation")
 			vmArgs(
@@ -149,5 +68,110 @@ loom {
 			)
 			runDir("build/datagen")
 		}
+
+		register("testModClient") {
+			client()
+			name("Test Mod Client")
+			source(sourceSets.getByName("test"))
+			runDir("run/test")
+		}
+
+		register("testModServer") {
+			server()
+			name("Test Mod Server")
+			source(sourceSets.getByName("test"))
+			runDir("run/test_server")
+		}
+
+		register("gametest") {
+			server()
+			name("Test")
+			source(sourceSets.getByName("test"))
+			vmArgs("-Dfabric-api.gametest")
+			vmArgs("-Dfabric-api.gametest.report-file=${project.layout.buildDirectory}/junit.xml")
+			runDir("run/gametest_server")
+		}
+
+		afterEvaluate {
+			configureEach {
+				vmArg("-javaagent:${configurations.compileClasspath.get().find { it.name.contains("sponge-mixin") }}")
+				vmArg("-XX:+IgnoreUnrecognizedVMOptions") // in the case the below doesnt work bc that JVM doesnt have it
+				vmArg("-XX:+AllowEnhancedClassRedefinition")
+				property("mixin.hotSwap", "true")
+				property("mixin.debug.export", "true")
+			}
+		}
+	}
+}
+
+java {
+	withSourcesJar()
+
+	toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+// Write the version to the fabric.mod.json
+tasks.processResources {
+	val properties: Map<String, Any> = mapOf(
+		// mod vers
+		"version" to project.version,
+
+		// dependency vers
+		"fabric_api" to ">=$fabricApiVersion",
+		"fabric_language_kotlin" to ">=$fabricLanguageKotlinVersion",
+		"fabric_loader" to ">=$fabricLoaderVersion",
+		"java" to ">=$javaVersion",
+		"minecraft" to "~$minecraftVersion",
+	)
+
+	inputs.properties(properties)
+
+	filesMatching("fabric.mod.json") {
+		expand(properties)
+	}
+}
+
+tasks.jar {
+	from("LICENSE") {
+		rename { "${it}_${project.base.archivesName.get()}"}
+	}
+}
+
+publishing {
+	publications {
+		create<MavenPublication>("mavenJava") {
+			from(components["java"])
+		}
+	}
+
+	repositories {
+		listOf("Releases", "Snapshots").forEach {
+			maven("https://mvn.devos.one/${it.lowercase()}") {
+				name = "devOS$it"
+				credentials(PasswordCredentials::class)
+			}
+		}
+	}
+}
+
+fun getModVersion(): String {
+	val modVersion = project.property("mod_version").toString()
+	val gitExitCode = providers.exec { commandLine("git", "--version"); isIgnoreExitValue = true }.result.get().exitValue
+
+	if (gitExitCode == 0) { // 0 = git is installed, anything else, prob not.
+		val buildId = providers.exec { commandLine("git", "rev-parse", "--short", "HEAD")}.standardOutput.asText.get().trim()
+		val dirtyStateCmd = providers.exec { commandLine("git", "status", "--porcelain") }.standardOutput.asText.get().trim()
+
+		fun dirtyStateText(): String {
+			return if (dirtyStateCmd.isEmpty()) {
+				""
+			} else {
+				"-dirty"
+			}
+		}
+
+		return "$modVersion${dirtyStateText()}"
+	} else {
+		return "$modVersion"
 	}
 }
